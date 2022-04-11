@@ -1,0 +1,40 @@
+.bold {
+  font-weight: 700;
+}
+
+.block {
+  display: inline-block;
+}
+
+.panel {
+  background-color: #333333 !important;
+}
+
+.panel-heading {
+  font-weight: 900;
+  color: white;
+}
+
+label {
+  color: #eeeeee;
+}
+
+input {
+  width: 100%;
+}
+
+.form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control {
+  background-color: white;
+}
+
+button {
+  background-color: #333333 !important;
+  border-color: #800000;
+  color: white;
+}
+
+button:hover {
+  background-color: #444444 !important;
+  border-color: #800000;
+  color: white;
+}

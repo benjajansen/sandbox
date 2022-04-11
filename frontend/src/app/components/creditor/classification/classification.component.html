@@ -1,0 +1,76 @@
+<nav-bar></nav-bar>
+
+<div class="greybackground">
+  <div class="container">
+
+    <form (ngSubmit)="onSubmit()" [formGroup]="classificationForm" novalidate>
+      <legend>Classification</legend>
+      <div class="form-inline col-sm-12">
+        <div class="form-group col-sm-6">
+          <label class="control-label">Description</label>
+          <input type="text" class="form-control pull-right" formControlName="description" required style="width: 75%;">
+          <br>
+          <br>
+        </div>
+      </div>
+
+      <!-------------------------  Details section  ------------------------->
+      <legend>Previously Added</legend>
+      <div class="form-inline col-sm-12">
+        <div class="form-group col-sm-12">
+          <div class="panel panel-default">
+            <div class="panel-heading">Classifications</div>
+            <div class="panel-body pre-scrollable" style="background-color: darkgrey;">
+              <div *ngIf="classifications" >
+                <div *ngFor="let keys of classifications | sort">
+
+                    <inline-edit [text]="keys.value" [deleteButton]="true" (edit)="onEdit($event, keys.id)" (delete)="onDelete(keys.id)"></inline-edit>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <br>
+        <br>
+      </div>
+
+      <div class="form-inline">
+        <div class="form-group">
+          <div class="col-sm-offset-0 col-sm-10">
+            <button *ngIf="!classificationForm.valid" type="button" class="btn btn-default" (click)="modal.show()">Save</button>
+            <button *ngIf="classificationForm.valid" type="submit" class="btn btn-default">Save</button>
+          </div>
+          <br>
+        </div>
+        <div class="text-success" *ngIf="added">
+          <h4>Added Successfully!</h4>
+        </div>
+        <div class="text-success" *ngIf="edited">
+          <h4>Edited Successfully!</h4>
+        </div>
+        <div class="text-success" *ngIf="deleted">
+          <h4>Deleted Successfully!</h4>
+        </div>
+      </div>
+
+    </form>
+
+    <app-modal #modal>
+      <div class="app-modal-header">
+        An error occurred.
+      </div>
+      <div class="app-modal-body">
+        <div *ngIf="formErrors.description || !classificationForm.controls.description.valid" class="alert alert-warning">
+          <label>{{formErrors.description}}</label>
+        </div>
+
+        <div *ngIf="deletedError" class="alert alert-warning">
+          <label>Branch in use, can't delete.</label>
+        </div>
+      </div>
+    </app-modal>
+
+  </div>
+</div>
+

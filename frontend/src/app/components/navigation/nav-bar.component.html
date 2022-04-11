@@ -1,0 +1,319 @@
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation" id="navigationbar">
+  <!-- Brand and toggle get grouped for better mobile display -->
+  <div class="navbar-header">
+    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+      <span class="sr-only">Toggle navigation</span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </button>
+    <a class="navbar-brand" routerLink="/home" routerLinkActive="active">
+      <img src="resources/static/pic/logo.png" class="img-thumbnail" style="width: 50px;"/>
+    </a>
+  </div>
+
+  <!-- Collect the nav links, forms, and other content for toggling-->
+  <div class="collapse navbar-collapse navbar-ex1-collapse">
+    <ul class="nav navbar-nav">
+      <li class="dropdown">
+        <a class="dropdown-toggle" role="button" data-toggle="dropdown">
+          Customer <span class="glyphicon glyphicon-triangle-bottom"></span>
+        </a>
+        <ul class="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu">
+          <li>
+            <a routerLink="/debtor" routerLinkActive="active" >
+              Master File Maintenance
+            </a>
+          </li>
+          <li class="divider"></li>
+          <li>
+            <a routerLink="/salesOrder" routerLinkActive="active" >
+              Sales Order
+            </a>
+          </li>
+          <li class="divider"></li>
+          <li class="dropdown-submenu">
+            <a tabindex="-1">
+              Setup
+            </a>
+            <ul class="dropdown-menu">
+              <li>
+                <a routerLink="/debtorBusinessType" routerLinkActive="active" tabindex="-1" >
+                  Business Type
+                </a>
+              </li>
+              <li>
+                <a routerLink="/debtorBusinessUnit" routerLinkActive="active" tabindex="-1" >
+                  Business Unit
+                </a>
+              </li>
+              <li>
+                <a routerLink="/debtorCategory" routerLinkActive="active" tabindex="-1" >
+                  Category
+                </a>
+              </li>
+              <li>
+                <a routerLink="/debtorTypeOfOrganisation" routerLinkActive="active" tabindex="-1" >
+                  Type of Organisation
+                </a>
+              </li>
+              <li>
+                <a routerLink="/debtorCostCentre" routerLinkActive="active" tabindex="-1" >
+                  Cost Centre
+                </a>
+              </li>
+              <!-- Add a third level with this
+              <li class="dropdown-submenu">
+                <a href="#">Even More..</a>
+                <ul class="dropdown-menu">
+                  <li><a href="#">3rd level</a></li>
+                  <li><a href="#">3rd level</a></li>
+                </ul>
+              </li>
+              -->
+            </ul>
+          </li>
+        </ul>
+      </li>
+
+      <li class="dropdown">
+        <a class="dropdown-toggle" role="button" data-toggle="dropdown">
+          Supplier <span class="glyphicon glyphicon-triangle-bottom"></span>
+        </a>
+        <ul class="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu">
+          <li>
+            <a routerLink="/creditor" routerLinkActive="active" >
+              Master File Maintenance
+            </a>
+          </li>
+          <li class="divider"></li>
+          <li class="dropdown-submenu">
+            <a tabindex="-1">
+              Setup
+            </a>
+            <ul class="dropdown-menu">
+              <li>
+                <a routerLink="/creditorClassification" routerLinkActive="active" tabindex="-1" >
+                  Classification
+                </a>
+              </li>
+              <li>
+                <a routerLink="/creditorGroup" routerLinkActive="active" tabindex="-1" >
+                  Group
+                </a>
+              </li>
+              <!--Add a third level with this
+              <li class="dropdown-submenu">
+                <a href="#">Even More..</a>
+                <ul class="dropdown-menu">
+                  <li><a href="#">3rd level</a></li>
+                  <li><a href="#">3rd level</a></li>
+                </ul>
+              </li>
+              -->
+            </ul>
+          </li>
+        </ul>
+      </li>
+
+      <li class="dropdown">
+        <a class="dropdown-toggle" role="button" data-toggle="dropdown">
+          Inventory Control <span class="glyphicon glyphicon-triangle-bottom"></span>
+        </a>
+        <ul class="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu">
+          <li>
+            <a routerLink="/itemMaster" routerLinkActive="active" >
+              Item Master
+            </a>
+          </li>
+          <li>
+            <a routerLink="/itemLink" routerLinkActive="active" >
+              Item Link
+            </a>
+          </li>
+          <li class="divider"></li>
+          <li class="dropdown-submenu">
+            <a tabindex="-1">
+              Transactions
+            </a>
+            <ul class="dropdown-menu">
+              <li>
+                <a routerLink="/home" routerLinkActive="active" tabindex="-1" >
+                  Goods Receive
+                </a>
+              </li>
+              <li>
+                <a routerLink="/home" routerLinkActive="active" tabindex="-1" >
+                  Goods Issue
+                </a>
+              </li>
+              <li>
+                <a routerLink="/home" routerLinkActive="active" tabindex="-1" >
+                  Goods Return
+                </a>
+              </li>
+              <li>
+                <a routerLink="/home" routerLinkActive="active" tabindex="-1" >
+                  Adjustment
+                </a>
+              </li>
+              <li>
+                <a routerLink="/home" routerLinkActive="active" tabindex="-1" >
+                  Transfer
+                </a>
+              </li>
+              <li>
+                <a routerLink="/home" routerLinkActive="active" tabindex="-1" >
+                  Count
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li class="divider"></li>
+          <li class="dropdown-submenu">
+            <a tabindex="-1">
+              Setup
+            </a>
+            <ul class="dropdown-menu">
+              <li>
+                <a routerLink="/itemCategory" routerLinkActive="active" tabindex="-1" >
+                  Category
+                </a>
+              </li>
+              <li>
+                <a routerLink="/itemGroup" routerLinkActive="active" tabindex="-1" >
+                  Group
+                </a>
+              </li>
+              <li>
+                <a routerLink="/itemUnitOfMeasure" routerLinkActive="active" tabindex="-1" >
+                  Unit Of Measure
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li class="divider"></li>
+          <li>
+            <a routerLink="/home" routerLinkActive="active" >
+              Parameters
+            </a>
+          </li>
+        </ul>
+      </li>
+    </ul>
+    <!--
+    <form class="navbar-form navbar-left" role="search">
+      <div class="form-group">
+        <input type="text" class="form-control" placeholder="Search">
+      </div>
+      <button type="submit" class="btn btn-default">Submit</button>
+    </form>
+    -->
+    <ul class="nav navbar-nav navbar-right">
+      <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+          Admin <b class="glyphicon glyphicon-triangle-bottom"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li>
+            <a routerLink="/adminBranch" routerLinkActive="active" href="#">
+              Branch
+            </a>
+          </li>
+          <li>
+            <a routerLink="/adminCityTown" routerLinkActive="active" href="#">
+              CityTown
+            </a>
+          </li>
+          <li>
+            <a routerLink="/adminCountry" routerLinkActive="active" href="#">
+              Country
+            </a>
+          </li>
+          <li>
+            <a routerLink="/adminProvince" routerLinkActive="active" href="#">
+              Province
+            </a>
+          </li>
+          <li>
+            <a routerLink="/adminWarehouse" routerLinkActive="active" href="#">
+              Warehouse
+            </a>
+          </li>
+          <li>
+            <a routerLink="/adminZone" routerLinkActive="active" href="#">
+              Zone
+            </a>
+          </li>
+          <li>
+            <a routerLink="/adminCompany" routerLinkActive="active" href="#">
+              Company
+            </a>
+          </li>
+        </ul>
+      </li>
+      <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+          System <b class="glyphicon glyphicon-triangle-bottom"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li>
+            <a routerLink="/systemBEELevel" routerLinkActive="active" href="#">
+              BEE Level
+            </a>
+          </li>
+          <li>
+            <a routerLink="/systemBEEType" routerLinkActive="active" href="#">
+              BEE Type
+            </a>
+          </li>
+          <li>
+            <a routerLink="/systemPaymentMethod" routerLinkActive="active" href="#">
+              Payment Method
+            </a>
+          </li>
+          <li>
+            <a routerLink="/systemPaymentTerm" routerLinkActive="active" href="#">
+              Payment Term
+            </a>
+          </li>
+          <li>
+            <a routerLink="/systemPaymentType" routerLinkActive="active" href="#">
+              Payment Type
+            </a>
+          </li>
+          <li>
+            <a routerLink="/systemPickMethod" routerLinkActive="active" href="#">
+              Pick Method
+            </a>
+          </li>
+          <li>
+            <a routerLink="/systemSettleDiscMethod" routerLinkActive="active" href="#">
+              Settle Discount Method
+            </a>
+          </li>
+          <li>
+            <a routerLink="/systemTitle" routerLinkActive="active" href="#">
+              Title
+            </a>
+          </li>
+          <li>
+            <a routerLink="/systemTradeLevel" routerLinkActive="active" href="#">
+              Trade Level
+            </a>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <a routerLink="/register" routerLinkActive="active">
+          Register new user
+        </a>
+      </li>
+      <li>
+        <a routerLink="/login" routerLinkActive="active" (click)="onClick()" style="padding-right: 30px;">
+          {{loginService.checkLogin() ? 'Logout' : 'Login'}}
+        </a>
+      </li>
+    </ul>
+  </div><!-- /.navbar-collapse -->
+</nav>

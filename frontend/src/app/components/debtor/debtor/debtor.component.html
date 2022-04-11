@@ -1,0 +1,635 @@
+<nav-bar></nav-bar>
+
+<div *ngIf="!debtorAdded" class="greybackground">
+  <div class="container">
+    <div class="form-inline" >
+      <div class="form-group col-sm-12">
+        <input type="text" placeholder="Search Account" aria-label="Number" mdInput
+               [formControl]="autoCompleteControl" [matAutocomplete]="auto"
+               class="form-control dropdown-toggle pull-right" style="width: 60%;">
+        <mat-autocomplete #auto="matAutocomplete" >
+          <mat-option *ngFor="let debt of filteredOptions" [value]="debt.accNo">
+            {{ debt.accNo }} | {{ debt.regName }} | {{ debt.tradeName }}
+          </mat-option>
+        </mat-autocomplete>
+      </div>
+    </div>
+
+    <form (ngSubmit)="onSubmit()" [formGroup]="debtorForm" novalidate>
+      <legend>Debtor Detail</legend>
+      <div class="form-inline col-sm-4">
+        <div class="form-group col-sm-12">
+          <div class="col-sm-4" style="vertical-align: center;">
+            <label class="control-label text-right" for="accNo" style="display: block;">Account Number</label>
+          </div>
+          <div class="col-sm-8">
+            <input class="form-control" id="accNo" type="text" formControlName="accNo" required style="width: 100%;">
+          </div>
+          <br>
+          <br>
+        </div>
+
+        <div class="form-group col-sm-12">
+          <div class="col-sm-4" style="vertical-align: center;">
+            <label class="control-label text-right" for="regNo" style="display: block;">Reg Number</label>
+          </div>
+          <div class="col-sm-8">
+            <input class="form-control" id="regNo" type="text" formControlName="regNo" required style="width: 100%;">
+          </div>
+          <br>
+          <br>
+        </div>
+
+        <div class="form-group col-sm-12">
+          <div class="col-sm-4" style="vertical-align: center;">
+            <label class="control-label text-right" for="vatNo" style="display: block;">VAT Number</label>
+          </div>
+          <div class="col-sm-8">
+            <input class="form-control" id="vatNo" type="number" formControlName="vatNo" style="width: 100%;">
+          </div>
+          <br>
+          <br>
+        </div>
+      </div>
+
+      <div class="form-inline col-sm-8">
+        <div class="form-group col-sm-12">
+          <div class="col-sm-3" style="vertical-align: center;">
+            <label class="control-label text-right" for="parent" style="display: block;">Parent Account</label>
+          </div>
+          <div class="col-sm-9">
+            <input type="text" placeholder=" " aria-label="Text" matInput
+                   formControlName="parent" [matAutocomplete]="autoDebtor" id="parent"
+                   class="form-control dropdown-toggle" style="width: 100%;">
+            <mat-autocomplete #autoDebtor="matAutocomplete" >
+              <mat-option *ngFor="let debt of filteredOptions" [value]="debt.accNo">
+                {{ debt.accNo }} | {{ debt.regName }} | {{ debt.tradeName }}
+              </mat-option>
+            </mat-autocomplete>
+          </div>
+          <br>
+          <br>
+        </div>
+
+        <div class="form-group col-sm-12">
+          <div class="col-sm-3" style="vertical-align: center;">
+            <label class="control-label text-right" for="regName" style="display: block;">Registration Name</label>
+          </div>
+          <div class="col-sm-9">
+            <input class="form-control" id="regName" type="text" formControlName="regName" required style="width: 100%;">
+          </div>
+          <br>
+          <br>
+        </div>
+
+        <div class="form-group col-sm-12">
+          <div class="col-sm-3" style="vertical-align: center;">
+            <label class="control-label text-right" for="tradeName" style="display: block;">Trading Name</label>
+          </div>
+          <div class="col-sm-9">
+            <input class="form-control" id="tradeName" type="text" formControlName="tradeName" required style="width: 100%;">
+          </div>
+          <br>
+          <br>
+        </div>
+        <br>
+        <br>
+      </div>
+
+      <!-------------------------  Company details section  ------------------------->
+      <legend>Company Details</legend>
+      <div class="form-inline col-sm-12">
+        <div class="form-group col-sm-4">
+          <div class="panel panel-default">
+            <div class="panel-heading">Physical Address</div>
+            <div class="panel-body" style="background-color: darkgrey;">
+              <input type="text" class="form-control pull-right" formControlName="street1" style="width: 100%;">
+              <br>
+              <input type="text" class="form-control pull-right" formControlName="street2" style="width: 100%;">
+              <br>
+              <input type="text" class="form-control pull-right" formControlName="street3" style="width: 100%;">
+              <br>
+              <input type="text" class="form-control pull-right" formControlName="street4" style="width: 100%;">
+              <br>
+              <label class="control-label">Postal Code</label>
+              <input type="text" class="form-control pull-right" formControlName="streetPostalCode" style="padding-left: 0px;">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group col-sm-4">
+          <div class="panel panel-default">
+            <div class="panel-heading">Postal Address</div>
+            <div class="panel-body" style="background-color: darkgrey;">
+              <input type="text" class="form-control pull-right" formControlName="box1" style="width: 100%;">
+              <br>
+              <input type="text" class="form-control pull-right" formControlName="box2" style="width: 100%;">
+              <br>
+              <input type="text" class="form-control pull-right" formControlName="box3" style="width: 100%;">
+              <br>
+              <input type="text" class="form-control pull-right" formControlName="box4" style="width: 100%;">
+              <br>
+              <label class="control-label">Postal Code</label>
+              <input type="text" class="form-control pull-right" formControlName="boxPostalCode" style="padding-left: 0px;">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group col-sm-4">
+          <div class="col-sm-5" style="vertical-align: center;">
+            <label class="control-label text-right" for="busUnit" style="display: block;">Business Unit</label>
+          </div>
+          <div class="col-sm-7">
+            <select class="form-control" formControlName="busUnit" id="busUnit" style="width: 100%;">
+              <option *ngFor="let keys of businessUnitss | sort" [value]="keys.value">{{keys.value}}</option>
+            </select>
+          </div>
+          <br>
+          <br>
+        </div>
+
+        <div class="form-group col-sm-4">
+          <div class="col-sm-5" style="vertical-align: center;">
+            <label class="control-label text-right" for="telNo" style="display: block;">Tel. Number</label>
+          </div>
+          <div class="col-sm-7">
+            <input class="form-control" id="telNo" type="tel" formControlName="telNo" style="width: 100%;">
+          </div>
+          <br>
+          <br>
+        </div>
+
+        <div class="form-group col-sm-4">
+          <div class="col-sm-5" style="vertical-align: center;">
+            <label class="control-label text-right" for="faxNo" style="display: block;">Fax. Number</label>
+          </div>
+          <div class="col-sm-7">
+            <input class="form-control" id="faxNo" type="tel" formControlName="faxNo" style="width: 100%;">
+          </div>
+          <br>
+          <br>
+        </div>
+
+        <div class="form-group col-sm-4">
+          <div class="col-sm-5" style="vertical-align: center;">
+            <label class="control-label text-right" for="webSite" style="display: block;">Website Address</label>
+          </div>
+          <div class="col-sm-7">
+            <input class="form-control" id="webSite" type="url" formControlName="webSite" style="width: 100%;">
+          </div>
+          <br>
+          <br>
+        </div>
+
+        <div class="form-group col-sm-4">
+          <div class="col-sm-5" style="vertical-align: center;">
+            <label class="control-label text-right" for="category" style="display: block;">Category</label>
+          </div>
+          <div class="col-sm-7">
+            <select class="form-control" formControlName="category" id="category" style="width: 100%;">
+              <option *ngFor="let keys of categories | sort" [value]="keys.value">{{keys.value}}</option>
+            </select>
+          </div>
+          <br>
+          <br>
+        </div>
+
+        <div class="form-group col-sm-4">
+          <div class="col-sm-5" style="vertical-align: center;">
+            <label class="control-label text-right" for="typeOrg" style="display: block;">Type of Organisation</label>
+          </div>
+          <div class="col-sm-7">
+            <select class="form-control" formControlName="typeOrg" id="typeOrg" style="width: 100%;">
+              <option *ngFor="let keys of typeOfOrganisations | sort" [value]="keys.value">{{keys.value}}</option>
+            </select>
+          </div>
+          <br>
+          <br>
+        </div>
+
+        <div class="form-group col-sm-4">
+          <div class="col-sm-5" style="vertical-align: center;">
+            <label class="control-label text-right" for="busType" style="display: block;">Business Type</label>
+          </div>
+          <div class="col-sm-7">
+            <select class="form-control" formControlName="busType" id="busType" style="width: 100%;">
+              <option *ngFor="let keys of businessTypes | sort" [value]="keys.value">{{keys.value}}</option>
+            </select>
+          </div>
+          <br>
+          <br>
+        </div>
+
+        <div class="form-group col-sm-4">
+          <div class="col-sm-5" style="vertical-align: center;">
+            <label class="control-label text-right" for="branch" style="display: block;">Branch</label>
+          </div>
+          <div class="col-sm-7">
+            <select class="form-control" formControlName="branch" id="branch" style="width: 100%;">
+              <option *ngFor="let keys of branches | sort" [value]="keys.value">{{keys.value}}</option>
+            </select>
+          </div>
+          <br>
+          <br>
+        </div>
+
+        <div class="form-group col-sm-4">
+          <div class="col-sm-5" style="vertical-align: center;">
+            <label class="control-label text-right" for="country" style="display: block;">Country</label>
+          </div>
+          <div class="col-sm-7">
+            <select class="form-control" formControlName="country" id="country" style="width: 100%;">
+              <option *ngFor="let keys of countries | sort" [value]="keys.value">{{keys.value}}</option>
+            </select>
+          </div>
+          <br>
+          <br>
+        </div>
+
+        <div class="form-group col-sm-4">
+          <div class="col-sm-5" style="vertical-align: center;">
+            <label class="control-label text-right" for="province" style="display: block;">Province</label>
+          </div>
+          <div class="col-sm-7">
+            <select class="form-control" formControlName="province" id="province" style="width: 100%;">
+              <option *ngFor="let keys of provinces | sort" [value]="keys.value">{{keys.value}}</option>
+            </select>
+          </div>
+          <br>
+          <br>
+        </div>
+
+        <div class="form-group col-sm-4">
+          <div class="col-sm-5" style="vertical-align: center;">
+            <label class="control-label text-right" for="city" style="display: block;">City/Town</label>
+          </div>
+          <div class="col-sm-7">
+            <select class="form-control" formControlName="city" id="city" style="width: 100%;">
+              <option *ngFor="let keys of cities | sort" [value]="keys.value">{{keys.value}}</option>
+            </select>
+          </div>
+          <br>
+          <br>
+        </div>
+        <br>
+        <br>
+      </div>
+
+
+      <!-------------------------  Accountant details section  ------------------------->
+      <legend style="color: darkgrey;">.</legend>
+      <div class="form-inline col-sm-12">
+        <div class="form-group col-sm-6">
+          <div class="panel panel-default">
+            <div class="panel-heading">Accounts Contact Details</div>
+            <div class="panel-body" style="background-color: darkgrey;">
+              <div class="form-group" style="width: 95%;">
+                <label class="control-label">First Name</label>
+                <input type="text" class="form-control pull-right" formControlName="accFName" style="width: 75%;">
+                <br>
+                <br>
+              </div>
+
+              <div class="form-group" style="width: 95%;">
+                <label class="control-label">Surname Name</label>
+                <input type="text" class="form-control pull-right" formControlName="accSName" style="width: 75%;">
+                <br>
+                <br>
+              </div>
+
+              <div class="form-group" style="width: 95%;">
+                <label class="control-label">Title</label>
+                <select class="form-control pull-right" formControlName="accTitle" style="width: 75%;">
+                  <option *ngFor="let keys of titles | sort" [value]="keys.value">{{keys.value}}</option>
+                </select>
+                <br>
+                <br>
+              </div>
+
+              <div class="form-group" style="width: 95%;">
+                <label class="control-label">Cell Number</label>
+                <input type="text" class="form-control pull-right" formControlName="accCellNo" style="width: 75%;">
+                <br>
+                <br>
+              </div>
+
+              <div class="form-group" style="width: 95%;">
+                <label class="control-label">Email Address</label>
+                <input type="email" class="form-control pull-right" formControlName="accEmail" style="width: 75%;">
+                <br>
+                <br>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group col-sm-6">
+          <div class="panel panel-default">
+            <div class="panel-heading">Operations Contact Details</div>
+            <div class="panel-body" style="background-color: darkgrey;">
+              <div class="form-group" style="width: 95%;">
+                <label class="control-label">First Name</label>
+                <input type="text" class="form-control pull-right" formControlName="oppFName" style="width: 75%;">
+                <br>
+                <br>
+              </div>
+
+              <div class="form-group" style="width: 95%;">
+                <label class="control-label">Surname Name</label>
+                <input type="text" class="form-control pull-right" formControlName="oppSName" style="width: 75%;">
+                <br>
+                <br>
+              </div>
+
+              <div class="form-group" style="width: 95%;">
+                <label class="control-label">Title</label>
+                <select class="form-control pull-right" formControlName="oppTitle" style="width: 75%;">
+                  <option *ngFor="let keys of titles | sort" [value]="keys.value">{{keys.value}}</option>
+                </select>
+                <br>
+                <br>
+              </div>
+
+              <div class="form-group" style="width: 95%;">
+                <label class="control-label">Cell Number</label>
+                <input type="text" class="form-control pull-right" formControlName="oppCellNo" style="width: 75%;">
+                <br>
+                <br>
+              </div>
+
+              <div class="form-group" style="width: 95%;">
+                <label class="control-label">Email Address</label>
+                <input type="email" class="form-control pull-right" formControlName="oppEmail" style="width: 75%;">
+                <br>
+                <br>
+              </div>
+            </div>
+          </div>
+        </div>
+        <br>
+        <br>
+      </div>
+
+      <!-------------------------  Credit details section  ------------------------->
+      <legend>Credit and Payment Details</legend>
+      <div class="form-inline col-sm-12">
+        <div class="form-group col-sm-4">
+          <div class="col-sm-5" style="vertical-align: center;">
+            <label class="control-label text-right" for="bankName" style="display: block;">Bank Name</label>
+          </div>
+          <div class="col-sm-7">
+            <input class="form-control" id="bankName" type="text" formControlName="bankName" style="width: 100%;">
+          </div>
+          <br>
+          <br>
+        </div>
+
+        <div class="form-group col-sm-4">
+          <div class="col-sm-5" style="vertical-align: center;">
+            <label class="control-label text-right" for="payTerm" style="display: block;">Payment Terms</label>
+          </div>
+          <div class="col-sm-7">
+            <select class="form-control" formControlName="payTerm" id="payTerm" style="width: 100%;">
+              <option *ngFor="let keys of paymentTerms | sort" [value]="keys.value">{{keys.value}}</option>
+            </select>
+          </div>
+          <br>
+          <br>
+        </div>
+
+        <div class="form-group col-sm-4">
+          <div class="col-sm-5" style="vertical-align: center;">
+            <label class="control-label text-right" for="creditRef" style="display: block;">Credit Ref No</label>
+          </div>
+          <div class="col-sm-7">
+            <input class="form-control" id="creditRef" type="text" formControlName="creditRef" style="width: 100%;">
+          </div>
+          <br>
+          <br>
+        </div>
+
+        <div class="form-group col-sm-4">
+          <div class="col-sm-5" style="vertical-align: center;">
+            <label class="control-label text-right" for="bankAccNo" style="display: block;">Bank Account No</label>
+          </div>
+          <div class="col-sm-7">
+            <input class="form-control" id="bankAccNo" type="text" formControlName="bankAccNo" style="width: 100%;">
+          </div>
+          <br>
+          <br>
+        </div>
+
+        <div class="form-group col-sm-4">
+          <div class="col-sm-5" style="vertical-align: center;">
+            <label class="control-label text-right" for="payMethod" style="display: block;">Payment Method</label>
+          </div>
+          <div class="col-sm-7">
+            <select class="form-control" formControlName="payMethod" id="payMethod" style="width: 100%;">
+              <option *ngFor="let keys of paymentMethods | sort" [value]="keys.value">{{keys.value}}</option>
+            </select>
+          </div>
+          <br>
+          <br>
+        </div>
+
+        <div class="form-group col-sm-4">
+          <div class="col-sm-5" style="vertical-align: center;">
+            <label class="control-label text-right" for="creditExpDate" style="display: block;">Credit Expiry</label>
+          </div>
+          <div class="input-group col-sm-7" >
+            <input class="form-control" id="creditExpDate" formControlName="creditExpDate" [value]="creditExpDate" matInput [matDatepicker]="creditExpDate1">
+            <span class="input-group-btn" style="background-color: red !important;"><mat-datepicker-toggle matSuffix [for]="creditExpDate1"></mat-datepicker-toggle></span>
+            <mat-datepicker #creditExpDate1 ></mat-datepicker>
+          </div>
+          <br>
+          <br>
+        </div>
+
+        <div class="form-group col-sm-4">
+          <div class="col-sm-5" style="vertical-align: center;">
+            <label class="control-label text-right" for="bankAccName" style="display: block;">Bank Account Name</label>
+          </div>
+          <div class="col-sm-7">
+            <input class="form-control" id="bankAccName" formControlName="bankAccName" type="text" style="width: 100%;">
+          </div>
+          <br>
+          <br>
+        </div>
+
+        <div class="form-group col-sm-4">
+          <div class="col-sm-5" style="vertical-align: center;">
+            <label class="control-label text-right" for="payType" style="display: block;">Payment Type</label>
+          </div>
+          <div class="col-sm-7">
+            <select class="form-control" formControlName="payType" id="payType" style="width: 100%;">
+              <option *ngFor="let keys of paymentTypes | sort" [value]="keys.value">{{keys.value}}</option>
+            </select>
+          </div>
+          <br>
+          <br>
+        </div>
+
+        <div class="form-group col-sm-4">
+          <div class="col-sm-5" style="vertical-align: center;">
+            <label class="control-label text-right" for="creditAmount" style="display: block;">Credit Amount</label>
+          </div>
+          <div class="col-sm-7">
+            <input class="form-control" id="creditAmount" formControlName="creditAmount" type="text" style="width: 100%;">
+          </div>
+          <br>
+          <br>
+        </div>
+
+        <div class="form-group col-sm-4">
+          <div class="col-sm-5" style="vertical-align: center;">
+            <label class="control-label text-right" for="bankBranchNo" style="display: block;">Bank Branch No</label>
+          </div>
+          <div class="col-sm-7">
+            <input class="form-control" id="bankBranchNo" formControlName="bankBranchNo" type="text" style="width: 100%;">
+          </div>
+          <br>
+          <br>
+        </div>
+
+        <div class="form-group col-sm-4">
+          <div class="form-inline">
+            <div class="form-group">
+              <input type="checkbox" id="arrearInt" autocomplete="off" formControlName="arrearsInt">
+              <div class="btn-group">
+                <label for="arrearInt" class="btn btn-default">
+                  <span class="glyphicon glyphicon-ok"></span>
+                  <span></span>
+                </label>
+                <label for="arrearInt" class="btn btn-default active">
+                  Charge Arrears Int
+                </label>
+              </div>
+            </div>
+
+
+            <div class="form-group" style="width: 40%;">
+              <label class="control-label">Interest %</label>
+              <input type="number" class="form-control pull-right" formControlName="intPerc" style="width: 45%; min-width: 60px;">
+            </div>
+          </div>
+          <br>
+          <br>
+        </div>
+
+        <div class="form-group col-sm-4">
+          <div class="col-sm-5" style="vertical-align: center;">
+            <label class="control-label text-right" for="creditAvail" style="display: block;">Credit Available</label>
+          </div>
+          <div class="col-sm-7">
+            <input class="form-control" id="creditAvail" formControlName="creditAvail" type="text" readonly style="width: 100%;">
+          </div>
+          <br>
+          <br>
+        </div>
+      </div>
+
+
+      <!-------------------------  Other Details  ------------------------->
+      <legend class="pull-left">Other Details</legend>
+      <div class="form-inline col-sm-12">
+        <div class="form-group col-sm-4">
+          <label>FICA Expiry Date</label>
+          <input type="date" class="form-control pull-right" formControlName="ficaExpDate" style="min-width: 202px;">
+          <br>
+          <br>
+        </div>
+
+        <div class="form-group col-sm-4">
+          <div class="form-inline">
+            <div class="form-group">
+              <input type="checkbox" id="orderReq" autocomplete="off" formControlName="orderReq">
+              <div class="btn-group">
+                <label for="orderReq" class="btn btn-default">
+                  <span class="glyphicon glyphicon-ok"></span>
+                  <span></span>
+                </label>
+                <label for="orderReq" class="btn btn-default active">
+                  Order No Required
+                </label>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <input type="checkbox" id="insured" autocomplete="off" formControlName="insured">
+              <div class="btn-group">
+                <label for="insured" class="btn btn-default">
+                  <span class="glyphicon glyphicon-ok"></span>
+                  <span></span>
+                </label>
+                <label for="insured" class="btn btn-default active">
+                  Self Insured
+                </label>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <input type="checkbox" id="suspended" autocomplete="off" formControlName="suspended">
+              <div class="btn-group">
+                <label for="suspended" class="btn btn-default">
+                  <span class="glyphicon glyphicon-ok"></span>
+                  <span></span>
+                </label>
+                <label for="suspended" class="btn btn-default active">
+                  Suspended
+                </label>
+              </div>
+            </div>
+          </div>
+          <br>
+          <br>
+        </div>
+
+        <div class="form-group col-sm-4">
+          <label>Credit Available</label>
+          <input type="text" class="form-control pull-right" formControlName="creditAmount">
+          <br>
+          <br>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="col-sm-offset-0 col-sm-10">
+          <button *ngIf="!debtorForm.valid && !selectorForm.controls.accNoDrop.dirty" type="button" class="btn btn-default" (click)="modal.show()">Submit</button>
+          <button *ngIf="debtorForm.valid && !selectorForm.controls.accNoDrop.dirty" type="submit" class="btn btn-default">Submit</button>
+          <button *ngIf="debtorForm.valid && selectorForm.controls.accNoDrop.dirty" type="button" class="btn btn-default" (click)="onUpdate()">Update</button>
+          <br>
+          <br>
+          <br>
+          <br>
+        </div>
+
+      </div>
+    </form>
+
+    <app-modal #modal>
+      <div class="app-modal-header">
+        Your form has errors.
+      </div>
+      <div class="app-modal-body">
+        <div *ngIf="formErrors.accNo || !debtorForm.controls.accNo.valid" class="alert alert-warning">
+          <label>{{formErrors.accNo}}</label>
+          <label *ngIf="debtorForm.controls.accNo.pristine">Account number required</label>
+        </div>
+        <div *ngIf="formErrors.tradeName || !debtorForm.controls.tradeName.valid" class="alert alert-warning">
+          <label>{{formErrors.tradeName}}</label>
+          <label *ngIf="debtorForm.controls.tradeName.pristine">Trade name required</label>
+        </div>
+        <div *ngIf="formErrors.regName || !debtorForm.controls.regName.valid" class="alert alert-warning">
+          <label>{{formErrors.regName}}</label>
+          <label *ngIf="debtorForm.controls.regName.pristine">Registered name required</label>
+        </div>
+      </div>
+    </app-modal>
+
+  </div>
+</div>
+
+
+<div class="text-success" *ngIf="debtorAdded" style="padding-top: 5%; padding-left: 30px;">
+  <h1 routerLink="/home" routerLinkActive="active" href="#">Added Debtor Successfully!</h1>
+</div>

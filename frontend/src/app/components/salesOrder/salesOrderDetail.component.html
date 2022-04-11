@@ -1,0 +1,41 @@
+
+  <form (ngSubmit)="onSubmit()" [formGroup]="salesOrderDetailForm" novalidate>
+    <div class="form-inline col-sm-12">
+
+      <!--
+      <div class="form-group col-sm-2">
+        <input type="text" class="form-control" formControlName="type" style="width: 100%;" (blur)="onBlur('2')">
+      </div>
+      -->
+
+      <div class="form-group col-sm-3">
+        <input type="text" placeholder="Search Item Code" aria-label="Number" mdInput
+               formControlName="item" [matAutocomplete]="itemAuto"
+               class="form-control dropdown-toggle" style="width: 100%;" (blur)="onBlur('3')">
+        <mat-autocomplete #itemAuto="matAutocomplete" >
+          <mat-option *ngFor="let item of filteredItems" [value]="item.code">
+            {{ item.code }} | {{ item.description }} | {{ item.altCode }}
+          </mat-option>
+        </mat-autocomplete>
+      </div>
+
+      <div class="form-group col-sm-3">
+        <input type="text" class="form-control" [value]="selectedItemDescription" readonly style="width: 100%;" (blur)="onBlur('3')">
+      </div>
+
+
+      <div class="form-group col-sm-2">
+        <input type="text" class="form-control" formControlName="pickingOrder" style="width: 100%;" (blur)="onBlur('3')">
+        <br>
+        <br>
+      </div>
+
+      <div class="form-group col-sm-2">
+        <input type="number" class="form-control" formControlName="quantity" style="width: 100%;" (blur)="onBlur('3')">
+        <br>
+        <br>
+      </div>
+
+      <a (click)="onDelete()" class="btn btn-danger col-sm-2"><span class="glyphicon glyphicon-trash"></span> Delete</a>
+    </div>
+  </form>

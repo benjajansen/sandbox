@@ -1,0 +1,542 @@
+<nav-bar></nav-bar>
+
+<div *ngIf="!creditorAdded" class="greybackground">
+  <div class="container">
+    <div class="form-inline" >
+      <div class="form-group col-sm-12">
+        <input type="text" placeholder="Search Account" aria-label="Number" mdInput
+               [formControl]="autoCompleteControl" [matAutocomplete]="auto"
+               class="form-control dropdown-toggle" style="width: 60%;">
+        <mat-autocomplete #auto="matAutocomplete" >
+          <mat-option *ngFor="let cred of filteredOptions" [value]="cred.accNo">
+            {{ cred.accNo }} | {{ cred.regName }} | {{ cred.tradeName }}
+          </mat-option>
+        </mat-autocomplete>
+      </div>
+    </div>
+
+
+    <form (ngSubmit)="onSubmit()" [formGroup]="creditorForm" novalidate>
+      <legend>Supplier Detail</legend>
+      <div class="form-inline col-sm-4">
+        <div class="form-group col-sm-12">
+          <label class="control-label">Account Number</label>
+          <input type="text" class="form-control pull-right" formControlName="accNo" required style="width: 62%;">
+          <br>
+          <br>
+        </div>
+
+        <div class="form-group col-sm-12">
+          <label class="control-label">Main Account</label>
+          <select class="form-control pull-right" formControlName="parent" style="width: 62%;">
+            <option *ngFor="let keys of creditorsShort" [value]="keys.value">{{keys.value}}</option>
+          </select>
+          <!--
+          <input type="text" class="form-control pull-right" formControlName="parent" style="width: 62%;">
+          -->
+          <br>
+          <br>
+        </div>
+
+        <div class="form-group col-sm-12">
+          <label class="control-label">Reg Number</label>
+          <input type="text" class="form-control pull-right" formControlName="regNo" style="width: 62%;">
+          <br>
+          <br>
+        </div>
+      </div>
+
+      <div class="form-inline col-sm-8">
+        <div class="form-group col-sm-12">
+          <label class="control-label">Trading Name</label>
+          <input type="text" class="form-control pull-right" formControlName="tradeName" required style="width: 75%;">
+          <br>
+          <br>
+        </div>
+
+        <div class="form-group col-sm-12">
+          <label class="control-label">Registration Name</label>
+          <input type="text" class="form-control pull-right" formControlName="regName" required style="width: 75%;">
+          <br>
+          <br>
+        </div>
+
+        <div class="form-group col-sm-4">
+          <input type="checkbox" id="VATVendor" autocomplete="off" formControlName="vatVendor">
+          <div class="btn-group">
+            <label for="VATVendor" class="btn btn-default">
+              <span class="glyphicon glyphicon-ok"></span>
+              <span></span>
+            </label>
+            <label for="VATVendor" class="btn btn-default active">
+              VAT Vendor
+            </label>
+          </div>
+        </div>
+
+        <div class="form-group col-sm-8">
+          <label class="control-label">VAT Number</label>
+          <input type="text" class="form-control pull-right" formControlName="vatNo" style="width: 62%;">
+          <br>
+          <br>
+        </div>
+        <br>
+        <br>
+      </div>
+
+      <!-------------------------  Company details section  ------------------------->
+      <legend>Company Details</legend>
+      <div class="form-inline col-sm-12">
+        <div class="form-group col-sm-4">
+          <div class="panel panel-default">
+            <div class="panel-heading">Physical Address</div>
+            <div class="panel-body" style="background-color: darkgrey;">
+              <input type="text" class="form-control pull-right" formControlName="street1" style="width: 100%;">
+              <br>
+              <input type="text" class="form-control pull-right" formControlName="street2" style="width: 100%;">
+              <br>
+              <input type="text" class="form-control pull-right" formControlName="street3" style="width: 100%;">
+              <br>
+              <input type="text" class="form-control pull-right" formControlName="street4" style="width: 100%;">
+              <br>
+              <label class="control-label">Postal Code</label>
+              <input type="text" class="form-control pull-right" formControlName="streetPostalCode" style="padding-left: 0px;">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group col-sm-4">
+          <div class="panel panel-default">
+            <div class="panel-heading">Postal Address</div>
+            <div class="panel-body" style="background-color: darkgrey;">
+              <input type="text" class="form-control pull-right" formControlName="box1" style="width: 100%;">
+              <br>
+              <input type="text" class="form-control pull-right" formControlName="box2" style="width: 100%;">
+              <br>
+              <input type="text" class="form-control pull-right" formControlName="box3" style="width: 100%;">
+              <br>
+              <input type="text" class="form-control pull-right" formControlName="box4" style="width: 100%;">
+              <br>
+              <label class="control-label">Postal Code</label>
+              <input type="text" class="form-control pull-right" formControlName="boxPostalCode" style="padding-left: 0px;">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group col-sm-4">
+          <label class="control-label">Tel. Number</label>
+          <input type="tel" class="form-control pull-right" formControlName="telNo">
+          <br>
+          <br>
+        </div>
+
+        <div class="form-group col-sm-4">
+          <label class="control-label">Fax. Number</label>
+          <input type="tel" class="form-control pull-right" formControlName="faxNo">
+          <br>
+          <br>
+        </div>
+
+        <div class="form-group col-sm-4">
+          <label class="control-label">Website Address</label>
+          <input type="url" class="form-control pull-right" formControlName="webSite">
+          <br>
+          <br>
+        </div>
+
+        <div class="form-group col-sm-4">
+          <label class="control-label">Group</label>
+          <select class="form-control pull-right" formControlName="group" style="width: 59%;">
+            <option *ngFor="let keys of groups | sort" [value]="keys.value">{{keys.value}}</option>
+          </select>
+          <br>
+          <br>
+        </div>
+
+        <div class="form-group col-sm-4">
+          <label class="control-label">Classification</label>
+          <select class="form-control pull-right" formControlName="classification" style="width: 59%;">
+            <option *ngFor="let keys of classifications | sort" [value]="keys.value">{{keys.value}}</option>
+          </select>
+          <br>
+          <br>
+        </div>
+
+        <div class="form-group col-sm-4">
+          <label class="control-label">Branch</label>
+          <select class="form-control pull-right" formControlName="branch" style="width: 59%;">
+            <option *ngFor="let keys of branches | sort" [value]="keys.value">{{keys.value}}</option>
+          </select>
+          <br>
+          <br>
+        </div>
+
+        <div class="form-group col-sm-4">
+          <label class="control-label">City/Town</label>
+          <select class="form-control pull-right" formControlName="city" style="width: 59%;">
+            <option *ngFor="let keys of cities | sort" [value]="keys.value">{{keys.value}}</option>
+          </select>
+
+          <br>
+          <br>
+        </div>
+
+        <div class="form-group col-sm-4">
+          <label class="control-label">Province</label>
+          <input type="text" class="form-control pull-right" formControlName="province">
+          <br>
+          <br>
+        </div>
+
+        <div class="form-group col-sm-4">
+          <label class="control-label">Country</label>
+          <input type="text" class="form-control pull-right" formControlName="country">
+          <br>
+          <br>
+        </div>
+      </div>
+
+
+      <!-------------------------  Accountant details section  ------------------------->
+      <legend style="color: darkgrey;">.</legend>
+      <div class="form-inline col-sm-12">
+        <div class="form-group col-sm-6">
+          <div class="panel panel-default">
+            <div class="panel-heading">Accounts Contact Details</div>
+            <div class="panel-body" style="background-color: darkgrey;">
+              <div class="form-group" style="width: 95%;">
+                <label class="control-label">First Name</label>
+                <input type="text" class="form-control pull-right" formControlName="accFName" style="width: 75%;">
+                <br>
+                <br>
+              </div>
+
+              <div class="form-group" style="width: 95%;">
+                <label class="control-label">Surname Name</label>
+                <input type="text" class="form-control pull-right" formControlName="accSName" style="width: 75%;">
+                <br>
+                <br>
+              </div>
+
+              <div class="form-group" style="width: 95%;">
+                <label class="control-label">Title</label>
+                <select class="form-control pull-right" formControlName="accTitle" style="width: 75%;">
+                  <option *ngFor="let title of titles | sort" [value]="title.value">{{title.value}}</option>
+                </select>
+                <br>
+                <br>
+              </div>
+
+              <div class="form-group" style="width: 95%;">
+                <label class="control-label">Cell Number</label>
+                <input type="text" class="form-control pull-right" formControlName="accCellNo" style="width: 75%;">
+                <br>
+                <br>
+              </div>
+
+              <div class="form-group" style="width: 95%;">
+                <label class="control-label">Email Address</label>
+                <input type="email" class="form-control pull-right" formControlName="accEmail" style="width: 75%;">
+                <br>
+                <br>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group col-sm-6">
+          <div class="panel panel-default">
+            <div class="panel-heading">Operations Contact Details</div>
+            <div class="panel-body" style="background-color: darkgrey;">
+              <div class="form-group" style="width: 95%;">
+                <label class="control-label">First Name</label>
+                <input type="text" class="form-control pull-right" formControlName="oppFName" style="width: 75%;">
+                <br>
+                <br>
+              </div>
+
+              <div class="form-group" style="width: 95%;">
+                <label class="control-label">Surname Name</label>
+                <input type="text" class="form-control pull-right" formControlName="oppSName" style="width: 75%;">
+                <br>
+                <br>
+              </div>
+
+              <div class="form-group" style="width: 95%;">
+                <label class="control-label">Title</label>
+                <select class="form-control pull-right" formControlName="oppTitle" style="width: 75%;">
+                  <option *ngFor="let title of titles | sort" [value]="title">{{title}}</option>
+                </select>
+                <br>
+                <br>
+              </div>
+
+              <div class="form-group" style="width: 95%;">
+                <label class="control-label">Cell Number</label>
+                <input type="text" class="form-control pull-right" formControlName="oppCellNo" style="width: 75%;">
+                <br>
+                <br>
+              </div>
+
+              <div class="form-group" style="width: 95%;">
+                <label class="control-label">Email Address</label>
+                <input type="email" class="form-control pull-right" formControlName="oppEmail" style="width: 75%;">
+                <br>
+                <br>
+              </div>
+            </div>
+          </div>
+        </div>
+        <br>
+        <br>
+      </div>
+
+      <!-------------------------  Payment Details, Terms and Discounts  ------------------------->
+      <legend>Payment Details, Terms and Discounts</legend>
+      <div class="form-inline col-sm-4">
+        <div class="form-group col-sm-12">
+          <label>Bank Name</label>
+          <input type="text" class="form-control pull-right" formControlName="bankName">
+          <br>
+          <br>
+        </div>
+
+        <div class="form-group col-sm-12">
+          <label>Bank Acc No</label>
+          <input type="text" class="form-control pull-right" formControlName="bankAccNo">
+          <br>
+          <br>
+        </div>
+
+        <div class="form-group col-sm-12">
+          <label>Bank Acc Name</label>
+          <input type="text" class="form-control pull-right" formControlName="bankAccName">
+          <br>
+          <br>
+        </div>
+
+        <div class="form-group col-sm-12">
+          <label>Bank Branch No</label>
+          <input type="text" class="form-control pull-right" formControlName="bankBranchNo">
+          <br>
+          <br>
+        </div>
+      </div>
+
+
+      <div class="form-inline col-sm-4">
+        <div class="form-group col-sm-12">
+          <label>Payment Terms</label>
+          <!--
+          <input type="text" class="form-control pull-right" formControlName="payTerm">
+          -->
+          <select class="form-control pull-right" formControlName="payTerm" style="width: 63%;">
+            <option *ngFor="let keys of paymentTerms | sort" [value]="keys.value">{{keys.value}}</option>
+          </select>
+          <br>
+          <br>
+        </div>
+
+        <div class="form-group col-sm-12">
+          <label>Settlement %</label>
+          <input type="number" class="form-control pull-right" formControlName="settleDiscount">
+          <br>
+          <br>
+        </div>
+
+        <div class="form-group col-sm-12">
+          <label>Settlement Days</label>
+          <input type="number" class="form-control pull-right" formControlName="settleDays">
+          <br>
+          <br>
+        </div>
+
+        <div class="form-group col-sm-12">
+          <label>Calculate From</label>
+          <input type="Text" class="form-control pull-right" formControlName="settleDiscMethod">
+          <br>
+          <br>
+        </div>
+      </div>
+
+      <div class="form-inline col-sm-4">
+        <div class="form-group col-sm-12">
+          <label>Trade Disc %</label>
+          <input type="number" class="form-control pull-right" formControlName="tradeDiscount">
+          <br>
+          <br>
+        </div>
+
+        <div class="form-group col-sm-12">
+          <label>Trade Level</label>
+          <input type="text" class="form-control pull-right" formControlName="tradeLevel">
+          <br>
+          <br>
+        </div>
+
+        <div class="form-group col-sm-12">
+          <input type="checkbox" id="orderReq" autocomplete="off" formControlName="orderReq">
+          <div class="btn-group pull-right">
+            <label for="orderReq" class="btn btn-default">
+              <span class="glyphicon glyphicon-ok"></span>
+              <span></span>
+            </label>
+            <label for="orderReq" class="btn btn-default active">
+              Order Number Required
+            </label>
+          </div>
+          <br>
+          <br>
+        </div>
+
+        <div class="form-group col-sm-12">
+          <input type="checkbox" id="suspended" autocomplete="off" formControlName="suspended">
+          <div class="btn-group pull-right">
+            <label for="suspended" class="btn btn-default">
+              <span class="glyphicon glyphicon-ok"></span>
+              <span></span>
+            </label>
+            <label for="suspended" class="btn btn-default active">
+              Suspended
+            </label>
+          </div>
+          <br>
+          <br>
+        </div>
+
+        <div class="form-group col-sm-12">
+          <label class="control-label">Date Suspended</label>
+          <input type="text" readonly class="form-control pull-right" formControlName="suspendedDate" >
+        </div>
+      </div>
+
+
+      <!-------------------------  BEE Details  ------------------------->
+      <legend>BEE Details</legend>
+      <div class="form-inline col-sm-4">
+        <div class="form-group col-sm-12">
+          <label>BEE Type</label>
+          <input type="text" class="form-control pull-right" formControlName="beeType">
+          <br>
+          <br>
+        </div>
+
+        <div class="form-group col-sm-12">
+          <label>BEE Score</label>
+          <input type="number" class="form-control pull-right" formControlName="beeScore">
+          <br>
+          <br>
+        </div>
+
+        <div class="form-group col-sm-12">
+          <label>BEE Level</label>
+          <input type="text" class="form-control pull-right" formControlName="beeLevel">
+          <br>
+          <br>
+        </div>
+      </div>
+
+      <div class="form-inline col-sm-4">
+        <div class="form-group col-sm-12">
+          <label>Ownership %</label>
+          <input type="text" class="form-control pull-right" formControlName="beeOwnership">
+          <br>
+          <br>
+        </div>
+
+        <div class="form-group col-sm-12">
+          <label>Woman %</label>
+          <input type="text" class="form-control pull-right" formControlName="beeWoman">
+          <br>
+          <br>
+        </div>
+
+        <div class="form-group col-sm-12">
+          <label>Youth %</label>
+          <input type="text" class="form-control pull-right" formControlName="beeYouth">
+          <br>
+          <br>
+        </div>
+
+        <div class="form-group col-sm-12">
+          <label>Disabled %</label>
+          <input type="text" class="form-control pull-right" formControlName="empDisabled">
+          <br>
+          <br>
+        </div>
+      </div>
+
+      <div class="form-inline col-sm-4">
+        <div class="form-group col-sm-12">
+          <input type="checkbox" id="certReceived" autocomplete="off" formControlName="beeCertReceived">
+          <div class="btn-group pull-right">
+            <label for="certReceived" class="btn btn-default">
+              <span class="glyphicon glyphicon-ok"></span>
+              <span></span>
+            </label>
+            <label for="certReceived" class="btn btn-default active">
+              Certificate Received
+            </label>
+          </div>
+          <br>
+          <br>
+        </div>
+
+        <div class="form-group col-sm-12">
+          <label>Expiry Date</label>
+          <input type="date" class="form-control pull-right" formControlName="beeCertExpDate" disabled>
+          <br>
+          <br>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="col-sm-offset-0 col-sm-10">
+          <button *ngIf="!creditorForm.valid && !selectorForm.controls.accNoDrop.dirty" type="button" class="btn btn-default" (click)="modal.show()">Submit</button>
+          <button *ngIf="creditorForm.valid && !selectorForm.controls.accNoDrop.dirty" type="submit" class="btn btn-default">Submit</button>
+          <button *ngIf="creditorForm.valid && selectorForm.controls.accNoDrop.dirty" type="button" class="btn btn-default" (click)="onUpdate()">Update</button>
+          <br>
+          <br>
+          <br>
+          <br>
+        </div>
+
+      </div>
+    </form>
+
+    <app-modal #modal>
+      <div class="app-modal-header">
+        Your form has errors.
+      </div>
+      <div class="app-modal-body">
+
+
+        <div *ngIf="formErrors.accNo || !creditorForm.controls.accNo.valid" class="alert alert-warning">
+          <label>{{formErrors.accNo}}</label>
+          <!--
+          <label *ngIf="!creditorForm.controls.accNo.valid">Account number required</label>
+          -->
+        </div>
+        <div *ngIf="formErrors.tradeName || !creditorForm.controls.tradeName.valid" class="alert alert-warning">
+          <label>{{formErrors.tradeName}}</label>
+          <!--
+          <label *ngIf="!creditorForm.controls.tradeName.valid">Trade name required</label>
+          -->
+        </div>
+        <div *ngIf="formErrors.regName || !creditorForm.controls.regName.valid" class="alert alert-warning">
+          <label>{{formErrors.regName}}</label>
+          <!--
+          <label *ngIf="!creditorForm.controls.regName.valid">Registered name required</label>
+          -->
+        </div>
+        <label>4</label>
+      </div>
+    </app-modal>
+
+  </div>
+</div>
+
+
+<div class="text-success" *ngIf="creditorAdded" style="padding-top: 5%; padding-left: 30px;">
+  <h1 routerLink="/home" routerLinkActive="active" href="#">Added Creditor Successfully!</h1>
+</div>

@@ -1,0 +1,40 @@
+.bold {
+  font-weight: 700;
+}
+
+.block {
+  display: inline-block;
+}
+
+div.input-group {
+  /*
+  text-decoration: none;
+  border-bottom: #A8B9CE dashed 1px;
+  cursor: pointer;
+  text-align: left;
+  padding: .5em 0;
+  color: #444 !important;
+  */
+  width: 100%;
+}
+
+input {
+  /*
+  border: 1px solid #ccc;
+  border-radius: 2px;
+  padding: 4px 10px;
+  */
+  width: 100%;
+}
+
+.form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control {
+  background-color: white;
+}
+
+.btn-danger {
+  background-color: white !important;
+}
+
+.btn-danger:hover {
+  background-color: #cc0000 !important;
+}

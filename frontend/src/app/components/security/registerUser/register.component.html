@@ -1,0 +1,184 @@
+<nav-bar></nav-bar>
+
+<div class="greybackground">
+  <div class="container centerPage">
+    <form (ngSubmit)="onSubmit()" [formGroup]="registerForm" novalidate>
+      <legend>Search</legend>
+      <div class="form-inline col-sm-12">
+        <div class="form-group col-sm-4"></div>
+        <div class="form-group col-sm-4"></div>
+        <div class="form-group col-sm-4">
+          <input type="text" placeholder="Search Customer Account" aria-label="Number" matInput
+                 formControlName="debtor" [matAutocomplete]="debtorAuto"
+                 class="form-control dropdown-toggle" style="width: 60%;">
+          <mat-autocomplete #debtorAuto="matAutocomplete" >
+            <mat-option *ngFor="let debt of filteredDebtors" [value]="debt.accNo">
+              {{ debt.accNo }} | {{ debt.regName }} | {{ debt.tradeName }}
+            </mat-option>
+          </mat-autocomplete>
+        </div>
+
+        <div class="col-sm-12">
+          <br>
+        </div>
+      </div>
+
+      <legend>User Details</legend>
+      <div class="form-inline col-sm-6">
+        <div class="form-group col-sm-12">
+          <label class="control-label">Logon Name</label>
+          <input type="text" class="form-control pull-right" formControlName="logonName" style="width: 62%;">
+          <br>
+          <br>
+        </div>
+
+        <div class="form-group col-sm-12">
+          <label class="control-label">First Name</label>
+          <input type="text" class="form-control pull-right" formControlName="firstName" style="width: 62%;">
+          <br>
+          <br>
+        </div>
+
+        <div class="form-group col-sm-12">
+          <label class="control-label">Last Name</label>
+          <input type="text" class="form-control pull-right" formControlName="lastName" style="width: 62%;">
+          <br>
+          <br>
+        </div>
+
+        <div class="form-group col-sm-12">
+          <label class="control-label">Security Group</label>
+          <select class="form-control pull-right" formControlName="groupHeader" style="width: 62%;">
+            <option *ngFor="let keys of groups | sort" [value]="keys.value">{{keys.value}}</option>
+          </select>
+          <br>
+          <br>
+        </div>
+
+        <div class="form-group col-sm-12">
+          <label class="control-label">Customer</label>
+          <select class="form-control pull-right" formControlName="customer" style="width: 62%;">
+            <option *ngFor="let keys of customers | sort" [value]="keys.value">{{keys.value}}</option>
+          </select>
+          <br>
+          <br>
+        </div>
+
+        <div class="form-group col-sm-12">
+          <label class="control-label">Warehouse</label>
+          <select class="form-control pull-right" formControlName="warehouse" style="width: 62%;">
+            <option *ngFor="let keys of warehouses | sort" [value]="keys.value">{{keys.value}}</option>
+          </select>
+          <br>
+          <br>
+        </div>
+
+        <div class="form-group col-sm-12">
+          <div class="form-inline">
+            <div class="form-group">
+              <input type="checkbox" id="active" autocomplete="off" formControlName="active">
+              <div class="btn-group">
+                <label for="active" class="btn btn-default">
+                  <span class="glyphicon glyphicon-ok"></span>
+                  <span></span>
+                </label>
+                <label for="active" class="btn btn-default active">
+                  Active
+                </label>
+              </div>
+            </div>
+          </div>
+          <br>
+          <br>
+        </div>
+      </div>
+
+      <div class="form-inline col-sm-6">
+        <div class="form-group col-sm-12">
+          <label class="control-label">Job Title</label>
+          <input type="text" class="form-control pull-right" formControlName="jobTitle" style="width: 62%;">
+          <br>
+          <br>
+        </div>
+
+        <div class="form-group col-sm-12">
+          <label class="control-label">Telephone No</label>
+          <input type="text" class="form-control pull-right" formControlName="telNo" style="width: 62%;">
+          <br>
+          <br>
+        </div>
+
+        <div class="form-group col-sm-12">
+          <label class="control-label">Cell No</label>
+          <input type="text" class="form-control pull-right" formControlName="cellNo" style="width: 62%;">
+          <br>
+          <br>
+        </div>
+
+        <div class="form-group col-sm-12">
+          <label class="control-label">Registered Date</label>
+          <mat-form-field class="form-group pull-right" style="width: 62%;">
+            <input class="form-control" formControlName="registerDate" matInput [matDatepicker]="picker2" placeholder="Value binding" style="width: 85%;">
+            <span ><mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle></span>
+            <mat-datepicker #picker2></mat-datepicker>
+          </mat-form-field>
+          <br>
+          <br>
+        </div>
+
+        <div class="form-group col-sm-12">
+          <label class="control-label">Create Date</label>
+          <mat-form-field class="form-group pull-right" style="width: 62%;">
+            <input class="form-control" formControlName="createDate" matInput [matDatepicker]="picker1" placeholder="Value binding" readonly  style="width: 85%;">
+            <span ><mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle></span>
+            <mat-datepicker #picker1></mat-datepicker>
+          </mat-form-field>
+          <br>
+          <br>
+        </div>
+
+        <div class="form-group col-sm-12">
+          <label class="control-label">Create User</label>
+          <input type="text" class="form-control pull-right" formControlName="createUser" readonly style="width: 62%;">
+          <br>
+          <br>
+        </div>
+
+        <div class="form-group col-sm-12">
+          <label class="control-label">Inactive Date</label>
+          <mat-form-field class="form-group pull-right" style="width: 62%;">
+            <input class="form-control" formControlName="inactiveDate" matInput [matDatepicker]="picker3" placeholder="Value binding" readonly style="width: 85%;">
+            <span ><mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle></span>
+            <mat-datepicker #picker3></mat-datepicker>
+          </mat-form-field>
+          <br>
+          <br>
+        </div>
+        <br>
+        <br>
+      </div>
+
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+
+      <div class="form-group">
+        <div class="col-sm-offset-0 col-sm-10">
+          <button *ngIf="!goodsIssueSelected && !goodsIssueForm.valid" type="button" class="btn btn-default" (click)="modal.show()">Submit</button>
+          <button *ngIf="!goodsIssueSelected && goodsIssueForm.valid" type="submit" class="btn btn-default">Submit</button>
+          <button *ngIf="goodsIssueSelected && goodsIssueForm.valid" type="button" class="btn btn-default" (click)="onUpdate()">Update</button>
+          <br>
+          <br>
+          <br>
+          <br>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <div class="text-success" *ngIf="registered" style="padding-top: 5%; padding-left: 30px;">
+    <h1 routerLink="/home" routerLinkActive="active" href="#">Successful!</h1>
+  </div>
+</div>

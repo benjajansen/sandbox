@@ -1,0 +1,386 @@
+<nav-bar></nav-bar>
+
+<div *ngIf="!salesOrderAdded" class="greybackground">
+  <div class="container">
+
+    <mat-tab-group>
+      <mat-tab label="Master" style="/deep/color: red;">
+
+        <form (ngSubmit)="onSubmit()" [formGroup]="salesOrderForm" novalidate>
+          <legend>Search</legend>
+          <div class="form-inline" >
+            <div class="form-group col-sm-12">
+              <input type="text" placeholder="Search Customer Account" aria-label="Number" matInput
+                     formControlName="debtor" [matAutocomplete]="debtorAuto"
+                     class="form-control dropdown-toggle" style="width: 60%;">
+              <mat-autocomplete #debtorAuto="matAutocomplete" >
+                <mat-option *ngFor="let debt of filteredDebtors" [value]="debt.accNo">
+                  {{ debt.accNo }} | {{ debt.regName }} | {{ debt.tradeName }}
+                </mat-option>
+              </mat-autocomplete>
+            </div>
+
+            <div class="col-sm-12">
+              <br>
+            </div>
+
+            <div class="form-group col-sm-12" *ngIf="!debtorSelected" matTooltip="Please select a Debtor first">
+              <input type="text" placeholder="Search Cost Centre" aria-label="Number"
+                     class="form-control dropdown-toggle" style="width: 60%;" readonly>
+            </div>
+
+            <div class="form-group col-sm-12" *ngIf="debtorSelected">
+              <input type="text" placeholder="Search Cost Centre" aria-label="Number" matInput
+                     formControlName="costCentre" [matAutocomplete]="costCentreAuto"
+                     class="form-control dropdown-toggle" style="width: 60%;">
+              <mat-autocomplete #costCentreAuto="matAutocomplete" >
+                <mat-option *ngFor="let cc of filteredCostCentres" [value]="cc.ccNo">
+                  {{ cc.ccNo }} | {{ cc.name }}
+                </mat-option>
+              </mat-autocomplete>
+            </div>
+
+            <div class="col-sm-12">
+              <br>
+            </div>
+
+            <div class="form-group col-sm-12" *ngIf="!costCentreSelected" matTooltip="Please select a Cost Centre first">
+              <input type="text" placeholder="Search Sales Order" aria-label="Number"
+                     class="form-control dropdown-toggle" style="width: 60%;" readonly>
+            </div>
+
+            <div class="form-group col-sm-12" *ngIf="costCentreSelected">
+              <input type="text" placeholder="Search Sales Order" aria-label="Number" matInput
+                     formControlName="orderNo" [matAutocomplete]="orderAuto"
+                     class="form-control dropdown-toggle" style="width: 60%;">
+              <mat-autocomplete #orderAuto="matAutocomplete" >
+                <mat-option *ngFor="let sale of filteredSalesOrders" [value]="sale.id">
+                  {{ sale.id }} | {{ sale.value }}
+                </mat-option>
+              </mat-autocomplete>
+            </div>
+
+            <div class="col-sm-12">
+              <br>
+            </div>
+          </div>
+
+          <legend>Order Detail</legend>
+          <div class="form-inline col-sm-12">
+            <div class="form-group col-sm-4">
+              <label class="control-label">Order Date</label>
+              <mat-form-field class="input-group pull-right">
+                <input class="form-control" formControlName="orderDate" matInput [matDatepicker]="picker3" placeholder="Value binding" [value]="orderDate" >
+                <span class="input-group-btn"><mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle></span>
+                <mat-datepicker #picker3></mat-datepicker>
+
+              </mat-form-field>
+              <br>
+              <br>
+            </div>
+
+
+
+            <div class="form-group col-sm-4">
+              <label class="control-label">Order Type</label>
+              <input type="text" class="form-control pull-right" formControlName="type" style="width: 62%;">
+              <br>
+              <br>
+            </div>
+
+            <div class="form-group col-sm-4">
+              <label class="control-label">Order Status</label>
+              <input type="text" class="form-control pull-right" formControlName="status" style="width: 62%;">
+              <br>
+              <br>
+            </div>
+          </div>
+
+          <div class="form-inline col-sm-12">
+            <div class="form-group col-sm-4">
+              <label class="control-label">Customer Order Number</label>
+              <input type="text" class="form-control pull-right" formControlName="custOrderNo" style="width: 62%;">
+              <br>
+              <br>
+            </div>
+
+            <div class="form-group col-sm-4">
+              <label class="control-label">Customer Release Number</label>
+              <input type="text" class="form-control pull-right" formControlName="releaseNo" style="width: 62%;">
+              <br>
+              <br>
+            </div>
+
+            <div class="form-group col-sm-4">
+              <label class="control-label">Transporter</label>
+              <input type="text" class="form-control pull-right" formControlName="transporter" style="width: 62%;">
+              <br>
+              <br>
+            </div>
+            <br>
+            <br>
+          </div>
+
+          <br>
+          <br>
+          <br>
+          <br>
+          <br>
+
+          <!-------------------------  Company details section  ------------------------->
+          <legend>Address Details</legend>
+          <div class="form-inline col-sm-4">
+            <div class="form-group col-sm-12">
+              <div class="panel panel-default">
+                <div class="panel-heading">Physical Address</div>
+                <div class="panel-body" style="background-color: darkgrey;">
+                  <input type="text" class="form-control pull-right" formControlName="street1" style="width: 100%;">
+                  <br>
+                  <input type="text" class="form-control pull-right" formControlName="street2" style="width: 100%;">
+                  <br>
+                  <input type="text" class="form-control pull-right" formControlName="street3" style="width: 100%;">
+                  <br>
+                  <input type="text" class="form-control pull-right" formControlName="street4" style="width: 100%;">
+                  <br>
+                  <label class="control-label">Postal Code</label>
+                  <input type="text" class="form-control pull-right" formControlName="streetPostalCode" style="padding-left: 0px;">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-inline col-sm-4">
+            <div class="form-group col-sm-12">
+              <label class="control-label">Branch</label>
+              <select class="form-control pull-right" formControlName="branch" style="width: 59%;">
+                <option *ngFor="let keys of branches | sort" [value]="keys.value">{{keys.value}}</option>
+              </select>
+              <br>
+              <br>
+            </div>
+
+            <div class="form-group col-sm-12">
+              <label class="control-label">Country</label>
+              <select class="form-control pull-right" formControlName="country" style="width: 59%;">
+                <option *ngFor="let keys of countries | sort" [value]="keys.value">{{keys.value}}</option>
+              </select>
+              <br>
+              <br>
+            </div>
+
+            <div class="form-group col-sm-12">
+              <label class="control-label">Province</label>
+              <select class="form-control pull-right" formControlName="province" style="width: 59%;">
+                <option *ngFor="let keys of provinces | sort" [value]="keys.value">{{keys.value}}</option>
+              </select>
+              <br>
+              <br>
+            </div>
+
+            <div class="form-group col-sm-12">
+              <label class="control-label">City/Town</label>
+              <select class="form-control pull-right" formControlName="city" style="width: 59%;">
+                <option *ngFor="let keys of cities | sort" [value]="keys.value">{{keys.value}}</option>
+              </select>
+              <br>
+              <br>
+            </div>
+
+            <div class="form-group col-sm-12">
+              <label class="control-label">GPS</label>
+              <input type="text" class="form-control pull-right" formControlName="gps" style="width: 59%;">
+              <br>
+              <br>
+            </div>
+            <br>
+            <br>
+          </div>
+
+
+          <!-------------------------  Accountant details section  ------------------------->
+          <div class="form-inline col-sm-4">
+            <div class="form-group col-sm-12">
+              <div class="panel panel-default">
+                <div class="panel-heading">Operations Contact Details</div>
+                <div class="panel-body" style="background-color: darkgrey;">
+                  <div class="form-group" style="width: 95%;">
+                    <label class="control-label">Firstname</label>
+                    <input type="text" class="form-control pull-right" formControlName="oppFName" style="width: 75%;">
+                    <br>
+                    <br>
+                  </div>
+
+                  <div class="form-group" style="width: 95%;">
+                    <label class="control-label">Surname</label>
+                    <input type="text" class="form-control pull-right" formControlName="oppSName" style="width: 75%;">
+                    <br>
+                    <br>
+                  </div>
+
+                  <div class="form-group" style="width: 95%;">
+                    <label class="control-label">Title</label>
+                    <select class="form-control pull-right" formControlName="oppTitle" style="width: 75%;">
+                      <option *ngFor="let keys of titles | sort" [value]="keys.value">{{keys.value}}</option>
+                    </select>
+                    <br>
+                    <br>
+                  </div>
+
+                  <div class="form-group" style="width: 95%;">
+                    <label class="control-label">Cell</label>
+                    <input type="text" class="form-control pull-right" formControlName="oppCellNo" style="width: 75%;">
+                    <br>
+                    <br>
+                  </div>
+
+                  <div class="form-group" style="width: 95%;">
+                    <label class="control-label">Email</label>
+                    <input type="email" class="form-control pull-right" formControlName="oppEmail" style="width: 75%;">
+                    <br>
+                    <br>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <br>
+            <br>
+          </div>
+
+
+          <!-------------------------  Delivery instructions and Comments  ------------------------->
+          <legend class="pull-left"> </legend>
+          <div class="form-inline col-sm-12">
+            <mat-form-field class="form-group col-sm-6">
+              <label class="control-label col-sm-12">Delivery Instructions</label>
+              <textarea class="form-control col-sm-12" formControlName="comments" matInput style="width: 95%;"></textarea>
+            </mat-form-field>
+
+            <mat-form-field class="form-group col-sm-6">
+              <label class="control-label col-sm-12">Comments</label>
+              <textarea class="form-control col-sm-12" formControlName="delInstruction" matInput style="width: 95%;"></textarea>
+            </mat-form-field>
+          </div>
+
+
+          <!-------------------------  Other Details  ------------------------->
+          <legend class="pull-left">Other Details</legend>
+          <div class="form-inline col-sm-12">
+
+
+            <div class="form-group col-sm-4">
+              <div class="form-inline">
+                <div class="form-group">
+                  <input type="checkbox" id="cancelled" autocomplete="off" formControlName="cancelled">
+                  <div class="btn-group">
+                    <label for="cancelled" class="btn btn-default">
+                      <span class="glyphicon glyphicon-ok"></span>
+                      <span></span>
+                    </label>
+                    <label for="cancelled" class="btn btn-default active">
+                      Cancelled
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <br>
+              <br>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="col-sm-offset-0 col-sm-10">
+              <button *ngIf="!salesOrderSelected && !salesOrderForm.valid" type="button" class="btn btn-default" (click)="modal.show()">Submit</button>
+              <button *ngIf="!salesOrderSelected && salesOrderForm.valid" type="submit" class="btn btn-default">Submit</button>
+              <button *ngIf="salesOrderSelected && salesOrderForm.valid" type="button" class="btn btn-default" (click)="onUpdate()">Update</button>
+              <br>
+              <br>
+              <br>
+              <br>
+            </div>
+          </div>
+        </form>
+
+      </mat-tab>
+      <mat-tab label="Detail" (click)="onClick()">
+
+        <div class="form-inline" col-sm-12>
+          <!--
+          <div class="form-group col-sm-2">
+            <label class="control-label" style="width:100%;">&ensp;&emsp;Order Type</label>
+          </div>
+          -->
+
+          <div class="form-group col-sm-3">
+            <label class="control-label">&emsp;Item Code</label>
+          </div>
+
+          <div class="form-group col-sm-3">
+            <label class="control-label">&ensp;Item Description</label>
+          </div>
+
+          <div class="form-group col-sm-2">
+            <label class="control-label">Picking Order</label>
+          </div>
+
+          <div class="form-group col-sm-2">
+            <label class="control-label">Quantity</label>
+          </div>
+
+          <div class="form-group col-sm-2">
+            <label class="control-label">Delete</label>
+          </div>
+
+          <div class="col-sm-12">
+            <br>
+          </div>
+        </div>
+
+
+        <div *ngIf="salesOrderDetails" >
+          <div *ngFor="let keys of salesOrderDetails; let i = index">
+            <salesOrderDetail [itemMasterAuto]="itemMasterAuto" [salesOrderDetail]="keys" (valid)="soValid()" (add)="soAdd($event, i)" (edit)="soEdit($event, i)" (delete)="soDelete(i)"></salesOrderDetail>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="col-sm-offset-0 col-sm-10">
+            <button *ngIf="!salesOrderSelected && !salesOrderForm.valid" type="button" class="btn btn-default" (click)="modal.show()">Submit</button>
+            <button *ngIf="!salesOrderSelected && salesOrderForm.valid" type="submit" class="btn btn-default" (click)="onSubmit()">Submit</button>
+            <button *ngIf="salesOrderSelected && salesOrderForm.valid" type="button" class="btn btn-default" (click)="onUpdate()">Update</button>
+
+            <br>
+            <br>
+            <br>
+            <br>
+          </div>
+        </div>
+
+      </mat-tab>
+    </mat-tab-group>
+
+    <app-modal #modal>
+      <div class="app-modal-header">
+        Your form has errors.
+      </div>
+      <div class="app-modal-body">
+        <div *ngIf="formErrors.orderNo || !salesOrderForm.controls.orderNo.valid" class="alert alert-warning">
+          <label>{{formErrors.orderNo}}</label>
+          <label *ngIf="salesOrderForm.controls.orderNo.pristine">Account number required</label>
+        </div>
+        <div *ngIf="formErrors.debtor || !salesOrderForm.controls.debtor.valid" class="alert alert-warning">
+          <label>{{formErrors.debtor}}</label>
+          <label *ngIf="salesOrderForm.controls.debtor.pristine">Trade name required</label>
+        </div>
+        <div *ngIf="formErrors.costCentre || !salesOrderForm.controls.costCentre.valid" class="alert alert-warning">
+          <label>{{formErrors.costCentre}}</label>
+          <label *ngIf="salesOrderForm.controls.costCentre.pristine">Registered name required</label>
+        </div>
+      </div>
+    </app-modal>
+
+  </div>
+</div>
+
+<div class="text-success" *ngIf="salesOrderAdded" style="padding-top: 5%; padding-left: 30px;">
+  <h1 routerLink="/home" routerLinkActive="active" href="#">Added SalesOrder Successfully!</h1>
+</div>

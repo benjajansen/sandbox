@@ -1,0 +1,380 @@
+<nav-bar></nav-bar>
+
+<div *ngIf="!itemMasterAdded" layout-fill flex class="greybackground">
+  <div class="container">
+
+    <mat-tab-group>
+      <mat-tab label="Master" style="/deep/color: red;">
+
+        <form class="form-inline" >
+          <mat-form-field class="form-group col-sm-12">
+            <br>
+            <input type="text" placeholder="Search Item" aria-label="Search Item" matInput
+                   [formControl]="autoCompleteControl" [matAutocomplete]="auto"
+                   class="form-control dropdown-toggle pull-right" style="width: 40%;">
+            <mat-autocomplete #auto="matAutocomplete" >
+              <mat-option *ngFor="let item of filteredOptions" [value]="item.code">
+                {{ item.code }} | {{ item.description }} | {{ item.altCode }}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+        </form>
+
+        <page-divider class="col-sm-12" heading="Item Information"></page-divider>
+
+        <form (ngSubmit)="onSubmit()" [formGroup]="itemMasterForm" novalidate>
+          <div class="form-inline col-sm-6">
+            <div class="form-group col-sm-12">
+              <div class="col-sm-4" style="vertical-align: center;">
+                <label class="control-label text-right" for="code" style="display: block;">Item Code</label>
+              </div>
+              <div class="col-sm-8">
+                <input class="form-control" id="code" type="text" formControlName="code" required style="width: 100%;">
+              </div>
+              <br>
+              <br>
+            </div>
+
+            <div class="form-group col-sm-12">
+              <div class="col-sm-4" style="vertical-align: center;">
+                <label class="control-label text-right" for="description" style="display: block;">Description</label>
+              </div>
+              <div class="col-sm-8">
+                <input class="form-control" id="description" type="text" formControlName="description" required style="width: 100%;">
+              </div>
+              <br>
+              <br>
+            </div>
+
+            <div class="form-group col-sm-12">
+              <div class="col-sm-4" style="vertical-align: center;">
+                <label class="control-label text-right" for="measure" style="display: block;">Unit of Measure</label>
+              </div>
+              <div class="col-sm-8">
+                <select class="form-control" formControlName="measure" id="measure" style="width: 100%;">
+                  <option *ngFor="let keys of unitOfMeasures | sort" [value]="keys.value">{{keys.value}}</option>
+                </select>
+              </div>
+              <br>
+              <br>
+            </div>
+
+            <div class="form-group col-sm-12">
+              <div class="col-sm-4" style="vertical-align: center;">
+                <label class="control-label text-right" for="cubeSize" style="display: block;">Cube Size</label>
+              </div>
+              <div class="col-sm-8">
+                <input class="form-control" id="cubeSize" type="number" formControlName="cubeSize" required style="width: 100%;">
+              </div>
+              <br>
+              <br>
+            </div>
+
+            <div class="form-group col-sm-12">
+              <div class="col-sm-4" style="vertical-align: center;">
+                <label class="control-label text-right" for="group" style="display: block;">Group</label>
+              </div>
+              <div class="col-sm-8">
+                <select class="form-control" formControlName="group" id="group" style="width: 100%;">
+                  <option *ngFor="let keys of groups | sort" [value]="keys.value">{{keys.value}}</option>
+                </select>
+              </div>
+              <br>
+              <br>
+            </div>
+
+            <div class="form-group col-sm-12">
+              <div class="col-sm-4" style="vertical-align: center;">
+                <label class="control-label text-right" for="category" style="display: block;">Category</label>
+              </div>
+              <div class="col-sm-8">
+                <select class="form-control" formControlName="category" id="category" style="width: 100%;">
+                  <option *ngFor="let keys of categories | sort" [value]="keys.value">{{keys.value}}</option>
+                </select>
+              </div>
+              <br>
+              <br>
+            </div>
+          </div>
+
+
+
+          <div class="form-inline col-sm-6">
+            <div class="form-group col-sm-12">
+              <div class="col-sm-4" style="vertical-align: center;"></div>
+              <div class="col-sm-8">
+                <input type="checkbox" id="suspend" autocomplete="off" formControlName="suspend">
+                <div class="btn-group pull-right">
+                  <label for="suspend" class="btn btn-default">
+                    <span class="glyphicon glyphicon-ok"></span>
+                    <span></span>
+                  </label>
+                  <label for="suspend" class="btn btn-default active">
+                    Suspended
+                  </label>
+                </div>
+              </div>
+              <br>
+              <br>
+            </div>
+
+            <div class="form-group col-sm-12">
+              <div class="col-sm-4" style="vertical-align: center;">
+                <label class="control-label text-right" for="suspendDate" style="display: block;">Date Suspended</label>
+              </div>
+              <div class="col-sm-8">
+                <input class="form-control" id="suspendDate" type="text" formControlName="suspendDate" readonly style="width: 100%;">
+              </div>
+              <br>
+              <br>
+            </div>
+          </div>
+
+          <div class="form-inline col-sm-8">
+            <div class="form-group col-sm-12">
+              <div class="col-sm-3" style="vertical-align: center;">
+                <label class="control-label text-right" for="comments" style="display: block;">Comments</label>
+              </div>
+              <div class="col-sm-9">
+                <textarea class="form-control" formControlName="comments" id="comments" matInput style="width: 100%; height: 100px; float: right; margin-right: 5px;"></textarea>
+              </div>
+              <br>
+              <br>
+            </div>
+          </div>
+
+          <div class="form-group col-sm-12">
+            <div class="col-sm-offset-0 col-sm-10">
+              <button *ngIf="!itemMasterForm.valid && !selectorForm.controls.codeDrop.dirty" type="button" class="btn btn-default" (click)="modal.show()">Submit</button>
+              <button *ngIf="itemMasterForm.valid && !selectorForm.controls.codeDrop.dirty" type="submit" class="btn btn-default">Submit</button>
+              <button *ngIf="itemMasterForm.valid && selectorForm.controls.codeDrop.dirty" type="button" class="btn btn-default" (click)="onUpdate()">Update</button>
+              <br>
+              <br>
+              <br>
+              <br>
+            </div>
+
+          </div>
+        </form>
+
+      </mat-tab>
+      <mat-tab label="Detail" >
+
+        <form class="form-inline" >
+          <mat-form-field class="form-group col-sm-12">
+            <br>
+            <input type="text" placeholder="Search Warehouse" matInput
+                   [formControl]="autoCompleteControl" [matAutocomplete]="auto2"
+                   class="form-control dropdown-toggle pull-right" style="width: 40%;">
+            <mat-autocomplete #auto2="matAutocomplete" >
+              <mat-option *ngFor="let item of filteredOptions" [value]="item.code">
+                {{ item.code }} | {{ item.description }} | {{ item.altCode }}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+        </form>
+
+        <page-divider class="col-sm-12" heading="Warehouse Summary"></page-divider>
+        <div class="col-sm-12">
+          <form class="form-inline col-sm-4">
+            <div class="form-group col-sm-12">
+              <label class="control-label">Qty On Order</label>
+              <input type="text" class="form-control pull-right" readonly style="width: 50%;">
+              <br>
+              <br>
+            </div>
+          </form>
+        </div>
+
+        <div class="col-sm-12">
+          <form class="form-inline col-sm-4">
+            <div class="form-group col-sm-12">
+              <label class="control-label">Qty Received</label>
+              <input type="text" class="form-control pull-right" readonly style="width: 50%;">
+              <br>
+              <br>
+            </div>
+
+            <div class="form-group col-sm-12">
+              <label class="control-label">Qty Issued</label>
+              <input type="text" class="form-control pull-right" readonly style="width: 50%;">
+              <br>
+              <br>
+            </div>
+
+            <div class="form-group col-sm-12">
+              <label class="control-label">Qty On Hand</label>
+              <input type="text" class="form-control pull-right" readonly style="width: 50%;">
+              <br>
+              <br>
+            </div>
+          </form>
+
+          <form class="form-inline col-sm-4">
+            <div class="form-group col-sm-12">
+              <label class="control-label">Nett Weight Received</label>
+              <input type="text" class="form-control pull-right" readonly style="width: 50%;">
+              <br>
+              <br>
+            </div>
+
+            <div class="form-group col-sm-12">
+              <label class="control-label">Nett Weight Issued</label>
+              <input type="text" class="form-control pull-right" readonly style="width: 50%;">
+              <br>
+              <br>
+            </div>
+
+            <div class="form-group col-sm-12">
+              <label class="control-label">Nett Weight On Hand</label>
+              <input type="text" class="form-control pull-right" readonly style="width: 50%;">
+              <br>
+              <br>
+            </div>
+          </form>
+
+          <form class="form-inline col-sm-4">
+            <div class="form-group col-sm-12">
+              <label class="control-label">No Pallets Received</label>
+              <input type="text" class="form-control pull-right" readonly style="width: 50%;">
+              <br>
+              <br>
+            </div>
+
+            <div class="form-group col-sm-12">
+              <label class="control-label">No Pallets Issued</label>
+              <input type="text" class="form-control pull-right" readonly style="width: 50%;">
+              <br>
+              <br>
+            </div>
+
+            <div class="form-group col-sm-12">
+              <label class="control-label">No Pallets On Hand</label>
+              <input type="text" class="form-control pull-right" readonly style="width: 50%;">
+              <br>
+              <br>
+            </div>
+          </form>
+        </div>
+        <page-divider class="col-sm-12" heading="Item Summary"></page-divider>
+        <div class="col-sm-12">
+          <form class="form-inline col-sm-4">
+            <div class="form-group col-sm-12">
+              <label class="control-label">Qty On Order</label>
+              <input type="text" class="form-control pull-right" readonly style="width: 50%;">
+              <br>
+              <br>
+            </div>
+          </form>
+        </div>
+
+        <div class="col-sm-12">
+          <form class="form-inline col-sm-4">
+            <div class="form-group col-sm-12">
+              <label class="control-label">Qty Received</label>
+              <input type="text" class="form-control pull-right" readonly style="width: 50%;">
+              <br>
+              <br>
+            </div>
+
+            <div class="form-group col-sm-12">
+              <label class="control-label">Qty Issued</label>
+              <input type="text" class="form-control pull-right" readonly style="width: 50%;">
+              <br>
+              <br>
+            </div>
+
+            <div class="form-group col-sm-12">
+              <label class="control-label">Qty On Hand</label>
+              <input type="text" class="form-control pull-right" readonly style="width: 50%;">
+              <br>
+              <br>
+            </div>
+          </form>
+
+          <form class="form-inline col-sm-4">
+            <div class="form-group col-sm-12">
+              <label class="control-label">Nett Weight Received</label>
+              <input type="text" class="form-control pull-right" readonly style="width: 50%;">
+              <br>
+              <br>
+            </div>
+
+            <div class="form-group col-sm-12">
+              <label class="control-label">Nett Weight Issued</label>
+              <input type="text" class="form-control pull-right" readonly style="width: 50%;">
+              <br>
+              <br>
+            </div>
+
+            <div class="form-group col-sm-12">
+              <label class="control-label">Nett Weight On Hand</label>
+              <input type="text" class="form-control pull-right" readonly style="width: 50%;">
+              <br>
+              <br>
+            </div>
+          </form>
+
+          <form class="form-inline col-sm-4">
+            <div class="form-group col-sm-12">
+              <label class="control-label">No Pallets Received</label>
+              <input type="text" class="form-control pull-right" readonly style="width: 50%;">
+              <br>
+              <br>
+            </div>
+
+            <div class="form-group col-sm-12">
+              <label class="control-label">No Pallets Issued</label>
+              <input type="text" class="form-control pull-right" readonly style="width: 50%;">
+              <br>
+              <br>
+            </div>
+
+            <div class="form-group col-sm-12">
+              <label class="control-label">No Pallets On Hand</label>
+              <input type="text" class="form-control pull-right" readonly style="width: 50%;">
+              <br>
+              <br>
+            </div>
+          </form>
+        </div>
+
+      </mat-tab>
+    </mat-tab-group>
+
+    <app-modal #modal>
+      <div class="app-modal-header">
+        Your form has errors.
+      </div>
+      <div class="app-modal-body">
+
+
+        <div *ngIf="formErrors.code || !itemMasterForm.controls.code.valid" class="alert alert-warning">
+          <label>{{formErrors.code}}</label>
+          <!--
+          <label *ngIf="!itemMasterForm.controls.code.valid">Account number required</label>
+          -->
+        </div>
+        <div *ngIf="formErrors.cubeSize || !itemMasterForm.controls.cubeSize.valid" class="alert alert-warning">
+          <label>{{formErrors.altCode}}</label>
+          <!--
+          <label *ngIf="!itemMasterForm.controls.tradeName.valid">Trade name required</label>
+          -->
+        </div>
+        <div *ngIf="formErrors.description || !itemMasterForm.controls.description.valid" class="alert alert-warning">
+          <label>{{formErrors.description}}</label>
+          <!--
+          <label *ngIf="!itemMasterForm.controls.regName.valid">Registered name required</label>
+          -->
+        </div>
+        <label>4</label>
+      </div>
+    </app-modal>
+
+  </div>
+</div>
+
+
+<div class="text-success" *ngIf="itemMasterAdded" style="padding-top: 5%; padding-left: 30px;">
+  <h1 routerLink="/home" routerLinkActive="active" href="#">Added Creditor Successfully!</h1>
+</div>

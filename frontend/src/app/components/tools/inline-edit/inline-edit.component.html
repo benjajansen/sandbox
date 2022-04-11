@@ -1,0 +1,28 @@
+
+    <div [hidden]="!isDisplay" >
+      <div class="input-group" style="width: 100%;">
+        <input title="Click to edit"
+               (click)="beginEdit(editText)"
+               (focus)="beginEdit(editText)"
+               tabindex="0"
+               value={{text}}
+               placeholder={{text}}
+               readonly
+               class="form-control pull-right">
+        <a *ngIf="deleteButton" (click)="beginDelete()" class="input-group-addon btn btn-danger"><span class="glyphicon glyphicon-trash"></span> Delete</a>
+      </div>
+    </div>
+
+    <div [hidden]="isDisplay">
+      <div class="input-group" style="width: 100%;">
+        <input #editText
+               (blur)="editDone(editText.value)"
+               [value]="text"
+               (keyup.enter)="editDone(editText.value)"
+               placeholder={{text}}
+               type="text"
+               class="form-control pull-right list-group-item-text">
+        <a *ngIf="deleteButton" (click)="beginDelete()" class="input-group-addon btn btn-danger"><span class="glyphicon glyphicon-trash"></span> Delete</a>
+
+      </div>
+    </div>

@@ -1,0 +1,241 @@
+<nav-bar></nav-bar>
+
+<div class="greybackground">
+  <div class="container">
+    <form (ngSubmit)="onSubmit()" [formGroup]="companyForm" novalidate>
+      <div class="form-inline col-sm-8">
+        <div class="form-group col-sm-12">
+          <label class="control-label">Registration Name</label>
+          <input type="text" class="form-control pull-right" formControlName="regName" required style="width: 75%;">
+          <br>
+          <br>
+        </div>
+
+        <div class="form-group col-sm-12">
+          <label class="control-label">Trading Name</label>
+          <input type="text" class="form-control pull-right" formControlName="tradeName" required style="width: 75%;">
+          <br>
+          <br>
+        </div>
+      </div>
+
+      <div class="form-inline col-sm-4">
+        <div class="form-group col-sm-12">
+          <label class="control-label">Reg Number</label>
+          <input type="text" class="form-control pull-right" formControlName="regNo" style="width: 62%;">
+          <br>
+          <br>
+        </div>
+
+        <div class="form-group col-sm-12">
+          <label class="control-label">VAT Number</label>
+          <input type="number" class="form-control pull-right" formControlName="vatNo" style="width: 75%;">
+          <br>
+          <br>
+        </div>
+        <br>
+        <br>
+      </div>
+
+      <!-------------------------  Company details section  ------------------------->
+      <legend>Company Details</legend>
+      <div class="form-inline col-sm-12">
+        <div class="form-group col-sm-4">
+          <div class="panel panel-default">
+            <div class="panel-heading">Physical Address</div>
+            <div class="panel-body" style="background-color: darkgrey;">
+              <input type="text" class="form-control pull-right" formControlName="street1" style="width: 100%;">
+              <br>
+              <input type="text" class="form-control pull-right" formControlName="street2" style="width: 100%;">
+              <br>
+              <input type="text" class="form-control pull-right" formControlName="street3" style="width: 100%;">
+              <br>
+              <input type="text" class="form-control pull-right" formControlName="street4" style="width: 100%;">
+              <br>
+              <label class="control-label">Postal Code</label>
+              <input type="text" class="form-control pull-right" formControlName="streetPostalCode" style="padding-left: 0px;">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group col-sm-4">
+          <div class="panel panel-default">
+            <div class="panel-heading">Postal Address</div>
+            <div class="panel-body" style="background-color: darkgrey;">
+              <input type="text" class="form-control pull-right" formControlName="box1" style="width: 100%;">
+              <br>
+              <input type="text" class="form-control pull-right" formControlName="box2" style="width: 100%;">
+              <br>
+              <input type="text" class="form-control pull-right" formControlName="box3" style="width: 100%;">
+              <br>
+              <input type="text" class="form-control pull-right" formControlName="box4" style="width: 100%;">
+              <br>
+              <label class="control-label">Postal Code</label>
+              <input type="text" class="form-control pull-right" formControlName="boxPostalCode" style="padding-left: 0px;">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group col-sm-4">
+          <label class="control-label">Tel. Number</label>
+          <input type="tel" class="form-control pull-right" formControlName="telNo">
+          <br>
+          <br>
+        </div>
+
+        <div class="form-group col-sm-4">
+          <label class="control-label">Fax. Number</label>
+          <input type="tel" class="form-control pull-right" formControlName="faxNo">
+          <br>
+          <br>
+        </div>
+
+        <div class="form-group col-sm-4">
+          <label class="control-label">Website Address</label>
+          <input type="url" class="form-control pull-right" formControlName="webSite">
+          <br>
+          <br>
+        </div>
+
+        <div class="form-group col-sm-4">
+          <label class="control-label">Country</label>
+          <select class="form-control pull-right" formControlName="country" style="width: 59%;">
+            <option *ngFor="let keys of countries | sort" [value]="keys.value">{{keys.value}}</option>
+          </select>
+          <br>
+          <br>
+        </div>
+
+        <br>
+        <br>
+      </div>
+
+      <!-------------------------  Credit details section  ------------------------->
+      <legend>Banking Details</legend>
+      <div class="form-inline col-sm-12">
+        <div class="form-group col-sm-4">
+          <label>Bank Name</label>
+          <input type="text" class="form-control pull-right" formControlName="bankName">
+          <br>
+          <br>
+        </div>
+
+        <div class="form-group col-sm-4">
+          <label>Bank Account No</label>
+          <input type="text" class="form-control pull-right" formControlName="bankAccNo">
+          <br>
+          <br>
+        </div>
+
+        <div class="form-group col-sm-4">
+          <label>Bank Account Name</label>
+          <input type="text" class="form-control pull-right" formControlName="bankAccName">
+          <br>
+          <br>
+        </div>
+
+        <div class="form-group col-sm-4">
+          <label>Bank Branch No</label>
+          <input type="text" class="form-control pull-right" formControlName="bankBranchNo">
+          <br>
+          <br>
+        </div>
+      </div>
+
+
+      <!-------------------------  Other Details  ------------------------->
+      <legend class="pull-left">Document Details</legend>
+      <div class="form-inline col-sm-12">
+        <div class="form-group col-sm-4">
+          <label>Header Colour</label>
+          <input type="text" class="form-control pull-right" formControlName="headerColour" style="min-width: 202px;">
+          <br>
+          <br>
+        </div>
+
+        <div class="form-group col-sm-4">
+          <label>Header Font Colour</label>
+          <input type="text" class="form-control pull-right" formControlName="hFontColour">
+          <br>
+          <br>
+        </div>
+
+        <div class="form-group col-sm-4">
+          <label>Body Colour</label>
+          <input type="text" class="form-control pull-right" formControlName="bodyColour">
+          <br>
+          <br>
+        </div>
+
+        <div class="form-group col-sm-4">
+          <label>Body Colour</label>
+          <input type="text" class="form-control pull-right" formControlName="bodyColour">
+          <br>
+          <br>
+        </div>
+
+        <div class="form-group col-sm-4">
+          <label>Body Font Colour</label>
+          <input type="text" class="form-control pull-right" formControlName="bFontColour">
+          <br>
+          <br>
+        </div>
+
+        <div class="form-group col-sm-4">
+          <label>Document Template</label>
+          <input type="text" class="form-control pull-right" formControlName="tempPrefix">
+          <br>
+          <br>
+        </div>
+
+        <file-upload ></file-upload>
+
+        <div class="form-group col-sm-4">
+          <label>Upload Logo</label>
+          <input type="file" (change)="uploadFileService.fileChangeEvent($event)" />
+          <button type="button" (click)="uploadFileService.upload()" class="ui mini button">Upload</button>
+        </div>
+
+      </div>
+
+      <div class="form-group">
+        <div class="col-sm-offset-0 col-sm-10">
+          <button *ngIf="!companyForm.valid" type="button" class="btn btn-default" (click)="modal.show()">Submit</button>
+
+          <!--
+          <button *ngIf="companyForm.valid && !selectorForm.controls.accNoDrop.dirty" type="submit" class="btn btn-default">Submit</button>
+          <button *ngIf="companyForm.valid && selectorForm.controls.accNoDrop.dirty" type="button" class="btn btn-default" (click)="onUpdate()">Update</button>
+          -->
+          <br>
+          <br>
+          <br>
+          <br>
+        </div>
+
+      </div>
+    </form>
+
+    <app-modal #modal>
+      <div class="app-modal-header">
+        Your form has errors.
+      </div>
+      <div class="app-modal-body">
+        <!--
+        <div *ngIf="formErrors.accNo || !companyForm.controls.accNo.valid" class="alert alert-warning">
+          <label>{{formErrors.accNo}}</label>
+          <label *ngIf="companyForm.controls.accNo.pristine">Account number required</label>
+        </div>
+        <div *ngIf="formErrors.tradeName || !companyForm.controls.tradeName.valid" class="alert alert-warning">
+          <label>{{formErrors.tradeName}}</label>
+          <label *ngIf="companyForm.controls.tradeName.pristine">Trade name required</label>
+        </div>
+        <div *ngIf="formErrors.regName || !companyForm.controls.regName.valid" class="alert alert-warning">
+          <label>{{formErrors.regName}}</label>
+          <label *ngIf="companyForm.controls.regName.pristine">Registered name required</label>
+        </div>
+        -->
+      </div>
+    </app-modal>
+
+  </div>
+</div>
